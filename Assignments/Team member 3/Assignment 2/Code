@@ -1,1 +1,12 @@
-
+from random import*     
+temperature=randint(1,100);    
+humidity=randint(1,100);     
+print("temperature is",temperature);
+print("humidity is",humidity);
+if temperature>=99:
+      if humidity>65:
+        print("Unusual Hazardous Condition");
+elif temperature>=99:
+    print("Caution:High Temperature");
+else:
+    print("Normal");
