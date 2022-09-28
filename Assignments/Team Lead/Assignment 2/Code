@@ -1,1 +1,12 @@
-
+from random import*     
+t=randint(1,100);    
+h=randint(1,100);     
+print("Temperature is",t);
+print("\nHumidity is",h);
+if t>=132:
+      if h>40:
+        print("It is Unsafe....Hazardous Area");
+elif t>=132:
+    print("High Temperature");
+else:
+    print("Condition os Good");
