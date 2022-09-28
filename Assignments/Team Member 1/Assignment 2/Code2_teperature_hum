@@ -1,0 +1,14 @@
+
+#for assuming temperature humidity randint function used
+from random import*
+temp= randint(1,100);
+hum= randint(1,100);
+print("temperture is ",temp);
+print("\n humidity is",hum);
+if temp>=75:   #set the high temperature limit
+   if hum>60:   #set the high humidity limit
+      print("it seems unusual...hazardous area");
+elif temp>=70: #set the temperature maximum
+  print("caution high temperature");
+else:
+  print("everything is normal");
