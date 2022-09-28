@@ -1,1 +1,57 @@
 
+int led = 11, pir =12,buz=13,gas_sen=A0,temp_sen=A1,fan=10;                                    
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(led, OUTPUT);      
+  pinMode(pir, INPUT);
+  pinMode(gas_sen,INPUT);
+  pinMode(buz,OUTPUT);
+  pinMode(temp_sen,INPUT);
+  pinMode(fan,OUTPUT);
+}
+void loop()
+{
+  int val = digitalRead(pir);
+  Serial.print("motion_sen value :");
+  Serial.println(val);
+  if (val == HIGH)
+  {     
+    digitalWrite(led, HIGH);   
+    //delay(500);                
+  }
+  else
+  {
+      digitalWrite(led, LOW);
+      delay(500);            
+  }
+  float gas_value=analogRead(gas_sen);
+  Serial.print("gas_value:");
+  Serial.println(gas_value);
+  if(gas_value>85)
+  {
+   digitalWrite(buz,HIGH);
+   digitalWrite(fan,HIGH);
+   //delay(500);
+  }
+  else
+  {
+   digitalWrite(buz,LOW);
+   digitalWrite(fan,LOW);
+   delay(500);
+  }
+  float temp_value =analogRead(temp_sen);
+  float temperature=((temp_value/1024)*5)*100;
+  Serial.print("temperature:");
+  Serial.println(temperature);
+  if(temperature>50)
+  {
+    digitalWrite(fan,HIGH);
+    //delay(500);
+  }
+  else
+  {
+   digitalWrite(fan,LOW);
+   delay(500);
+  }
+}
