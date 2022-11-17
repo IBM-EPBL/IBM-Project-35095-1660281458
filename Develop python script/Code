@@ -1,0 +1,111 @@
+#IBM Watson IOT Platform
+#pip install wiotp-sdk
+import wiotp.sdk.device
+import time
+import random
+myConfig = { 
+    "identity": {
+        "orgId": "mpt0iq",
+        "typeId": "dynamicboard",
+        "deviceId":"888"
+    },
+    "auth": {
+        "token": "0987654321"
+       
+    }
+}
+
+def myCommandCallback(cmd):
+    print("Message received from IBM IoT Platform: %s" % cmd.data['command'])
+    m=cmd.data['command']
+
+client = wiotp.sdk.device.DeviceClient(config=myConfig, logHandlers=None)
+client.connect()
+
+while True:
+    temperature=random.randint(-20,125)
+    vehiclescount=random.randint(0,100)
+    rest=random.randint(0,100)
+    hospital_distance=random.randint(0,500)
+    schooltime=random.randint(1,24)
+    a="Your Prefered Speed"
+    b="Speed Limit is 30 km\hr"
+    c="Take Diversion"
+    d="As Your Wish"
+    x={'Condition_for_Speed':a}
+    y={'Condition_for_Speed':b}
+    k={'Condition_for_Speed_limit_School':a}
+    l={'Condition_for_Speed_limit_School':b}
+    z={'Condition_for_Direction':c}
+    w={'Condition_for_Direction':d}
+    p="No Horn"
+    q={'caution':p}
+    Z={'caution':d}
+    distance1={'Distance_for_Hospital':hospital_distance}
+    myData1={'Temperature':temperature}
+    myData2={'Vehiclescount':vehiclescount}
+    myData3={'Restaurant_distance': rest}
+    myData5={'Hospital_distance':hospital_distance}
+    myData4={'Schooltime':schooltime}
+    client.publishEvent(eventId="status",msgFormat="json",data=myData1,qos=0,onPublish=None)
+    print("Published:%s",myData1)
+    if temperature>=20:
+        
+        client.publishEvent(eventId="status", msgFormat="json",data=x,qos=0,onPublish=None)
+        print(x)
+        print("\n")
+    else :
+        client.publishEvent(eventId="status", msgFormat="json",data=y,qos=0,onPublish=None)
+        print(y)
+        print("\n")
+
+    client.publishEvent(eventId="status",msgFormat="json",data=myData2,qos=0,onPublish=None)
+    print("Published:%s",myData2)
+    if vehiclescount>=50:
+        client.publishEvent(eventId="status",msgFormat="json",data=z,qos=0,onPublish=None)
+        print(z)
+        print("\n")
+    else:
+        client.publishEvent(eventId="status",msgFormat="json",data=w,qos=0,onPublish=None)
+        print(w)
+        print("\n")
+
+
+    client.publishEvent(eventId="status",msgFormat="json",data=myData4,qos=0,onPublish=None)
+    print("Published:%s",myData4)
+    
+    if  8<=schooltime and schooltime<=10 or 15<=schooltime and schooltime<=18:
+        client.publishEvent(eventId="status",msgFormat="json",data=l,qos=0,onPublish=None)
+        print(l)
+        print("\n")
+        
+    else :
+        client.publishEvent(eventId="status",msgFormat="json",data=k,qos=0,onPublish=None)
+        print(k)
+        print("\n")
+
+    client.publishEvent(eventId="status",msgFormat="json",data=myData5,qos=0,onPublish=None)
+    
+    if 0<=hospital_distance and hospital_distance<=200:
+        client.publishEvent(eventId="status",msgFormat="json",data=distance1,qos=0,onPublish=None)
+        print(distance1)
+        client.publishEvent(eventId="status",msgFormat="json",data=q,qos=0,onPublish=None)
+        print(q)
+        print("\n")
+    else:
+       client.publishEvent(eventId="status",msgFormat="json",data=distance1,qos=0,onPublish=None)
+       print(distance1)
+       client.publishEvent(eventId="status",msgFormat="json",data=Z,qos=0,onPublish=None)
+       print(Z)
+       print("\n")
+
+    client.publishEvent(eventId="status",msgFormat="json",data=myData3,qos=0,onPublish=None)  
+    print("Published:%s",myData3)
+    client.commandCallback=myCommandCallback
+    time.sleep(10)
+client.disconnect()
+
+
+
+
+
